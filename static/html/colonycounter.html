@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="ColonyCounter">
+<head>
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/styles.css">
+	<script src="/static/js/angular.min.js"></script>
+	<script src="/static/js/colonycounter.js"></script>
+	<title></title>
+</head>
+<body ng-controller="MainController">
+<div id="control_area">
+	<div id="camera_controls" ng-show="show==modes.CAMERA">
+		<button id="take_picture" class="btn btn-lg btn-primary" ng-click="takePicture()">Take picture</button>
+	</div>
+	<div id="counter_controls" ng-show="show==modes.SETTINGS">
+		<form>
+			<div>
+				<label><span>Auto-threshold</span><input type="checkbox" ng-model="autoThreshold"
+						ng-init="autoThreshold=true"></label>
+			</div>
+			<div ng-hide="autoThreshold">
+				<label><span>Threshold</span><input type="number" ng-model="threshold" min="0"> </label>
+			</div>
+			<div>
+				<label><span>Type of threshold</span><select ng-model="thresholdType">
+					<option value="bil" ng-selected="true">Bilateral</option>
+					<option value="inv">Inverse</option>
+					<option value="reg">Regular</option>
+				</select></label>
+			</div>
+			<div>
+				<label><span>Auto-mask</span><input type="checkbox" ng-model="autoMask" ng-init="autoMask=true"></label>
+			</div>
+			<div><span>Colony radius</span></div>
+			<div>
+				<label><span>Minimum</span><input type="number" ng-model="minColonyRadius" min="1"></label>
+			</div>
+			<div>
+				<label><span>Maximum</span><input type="number" ng-model="maxColonyRadius" min="1"></label>
+			</div>
+			<div><span>Hue/color threshold</span></div>
+			<div>
+				<label><span>Center</span><input type="number" ng-model="centerColorThreshold" min="0"></label>
+			</div>
+			<div>
+				<label><span>Tolerance</span><input type="number" ng-model="toleranceColorThreshold" min="0"></label>
+			</div>
+		</form>
+		<button class="btn btn-primary">Count</button>
+		<button class="btn" ng-click="show=modes.CAMERA">Take another picture</button>
+	</div>
+</div>
+<video id="video" ng-show="show==modes.CAMERA" autoplay></video>
+<canvas id="canvas" ng-show="show==modes.SETTINGS"></canvas>
+</body>
+</html>
